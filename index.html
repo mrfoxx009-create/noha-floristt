@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>گلفروشی آنلاین نُها</title>
+  <!-- فونت فارسی -->
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Vazirmatn", sans-serif;
+      background: linear-gradient(135deg, #ffeef4, #fff5f9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    .container {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      animation: slideUp 1.2s ease;
+    }
+    .logo {
+      width: 150px;
+      margin-bottom: 20px;
+      animation: pulse 3s infinite;
+    }
+    .text {
+      font-size: 19px;
+      line-height: 1.9;
+      color: #333;
+      margin-bottom: 25px;
+      opacity: 0;
+      animation: fadeText 2s ease forwards;
+      animation-delay: 1s;
+    }
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .links a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: 0.3s;
+      opacity: 0;
+      animation: fadeText 2s ease forwards;
+    }
+    /* اینستاگرام با گرادینت */
+    .links a.instagram {
+      background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+      animation-delay: 1.5s;
+    }
+    .links a.instagram:hover {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+    /* ایتا نارنجی */
+    .links a.eitaa {
+      background: #ff8800;
+      animation-delay: 1.8s;
+    }
+    .links a.eitaa:hover {
+      background: #e67300;
+      transform: scale(1.05);
+    }
+    .links img.icon {
+      width: 22px;
+      height: 22px;
+      display: inline-block;
+    }
+
+    /* انیمیشن‌ها */
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes slideUp {
+      from {transform: translateY(40px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    @keyframes fadeText {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- لوگو -->
+    <img src="logo.png" alt="لوگوی نُها" class="logo">
+
+    <!-- متن معرفی -->
+    <div class="text">
+      هر شاخه گل یادآور یه لبخند🕊️ <br>
+      برای قشنگ‌تر شدن لحظه‌هاتون روی ما حساب کنید ✨ <br>
+      با عشق گلفروشی آنلاین نُها 🌻
+    </div>
+
+    <!-- دکمه‌ها -->
+    <div class="links">
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/noha_florist?igsh=dmRrbGlnMDZheGhs"
+         target="_blank"
+         class="instagram">
+        <img src="instagram.png" alt="اینستاگرام" class="icon">
+        اینستاگرام
+      </a>
+
+      <!-- Eitaa -->
+      <a href="https://eitaa.com/noha_florist"
+         id="eitaaLink"
+         class="eitaa"
+         onclick="openEitaaApp(event)">
+        <img src="eitaa.png" alt="ایتا" class="icon">
+        ایتا
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function openEitaaApp(e) {
+      e.preventDefault();
+
+      const webUrl = 'https://eitaa.com/noha_florist';
+
+      // اندروید (intent)
+      const intentUrl = 'intent://eitaa.com/noha_florist#Intent;package=ir.eitaa.messenger;scheme=https;S.browser_fallback_url='
+                        + encodeURIComponent(webUrl) + ';end';
+
+      // iOS یا مرورگرهای بدون پشتیبانی intent
+      const schemeUrl = 'eitaa://resolve?domain=noha_florist';
+
+      const isAndroid = /Android/i.test(navigator.userAgent);
+if (isAndroid) {
+        window.location = intentUrl;
+        setTimeout(function() {
+          window.location = webUrl;
+        }, 1000);
+        return;
+      }
+
+      // iOS یا سایر دستگاه‌ها
+      const start = Date.now();
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = schemeUrl;
+      document.body.appendChild(iframe);
+
+      setTimeout(function() {
+        const delta = Date.now() - start;
+        if (delta < 1200) {
+          window.location = webUrl;
+        }
+        document.body.removeChild(iframe);
+      }, 800);
+    }
+  </script>
+</body>
+</html>
